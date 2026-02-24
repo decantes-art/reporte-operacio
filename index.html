@@ -3,19 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reporte Operación a la Dirección</title>
+<title>Reporte Operación a la Dirección · KIO</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 <script src="https://accounts.google.com/gsi/client" async></script>
 <style>
   :root {
     --kio-cyan: #4DCFFF;
     --kio-navy: #0A0A40;
-    --kio-navy-mid: #1A1A70;
     --kio-bar: #0D0D4A;
     --surface: #111827;
     --surface2: #1a2236;
     --border: #1e3a6e;
-    --accent: #4DCFFF;
     --accent2: #00ff88;
     --warn: #ffb800;
     --danger: #ff4757;
@@ -28,7 +26,7 @@
     background: #07091a;
     color:var(--text);
     min-height:100vh;
-    padding-bottom: 40px;
+    padding-bottom:40px;
   }
 
   /* ══ KIO APP BAR ══ */
@@ -39,16 +37,13 @@
     position: sticky; top:0; z-index:200;
   }
   .kio-bar-inner {
-    max-width: 700px; margin:0 auto;
-    padding: 0 16px;
-    height: 58px;
-    display: flex; align-items: center; gap:12px;
+    max-width:720px; margin:0 auto;
+    padding:0 16px; height:58px;
+    display:flex; align-items:center; gap:12px;
   }
   .kio-logo {
-    font-size:20px; font-weight:800; letter-spacing:.06em;
-    color:#fff;
-    text-shadow: 0 0 8px var(--kio-cyan), 0 0 18px var(--kio-cyan);
-    flex-shrink:0;
+    font-size:20px; font-weight:800; letter-spacing:.06em; color:#fff;
+    text-shadow:0 0 8px var(--kio-cyan),0 0 18px var(--kio-cyan); flex-shrink:0;
   }
   .kio-tagline {
     font-size:9px; color:rgba(255,255,255,.4); font-weight:600;
@@ -57,8 +52,7 @@
   }
   .kio-bar-title {
     flex:1; text-align:center;
-    font-size:13px; font-weight:700; color:#fff; letter-spacing:.04em;
-    text-transform:uppercase;
+    font-size:13px; font-weight:700; color:#fff; letter-spacing:.04em; text-transform:uppercase;
   }
   .kio-bar-right { margin-left:auto; display:flex; align-items:center; gap:8px; flex-shrink:0; }
   .date-chip {
@@ -75,66 +69,70 @@
   .user-pill:hover { border-color:var(--danger); }
   .uavatar { width:24px; height:24px; border-radius:50%; background:var(--border); overflow:hidden; flex-shrink:0; }
   .uavatar img { width:100%; height:100%; object-fit:cover; }
-  .uname { font-size:11px; max-width:90px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .uname { font-size:11px; max-width:100px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   .logout-hint { font-size:9px; color:var(--danger); line-height:1; }
 
-  /* ══ WIZARD ══ */
-  #wizardScreen { max-width:560px; margin:0 auto; padding:32px 16px; }
-  .wiz-logo { text-align:center; margin-bottom:28px; }
-  .wiz-kio { font-size:40px; font-weight:800; letter-spacing:.1em; color:#fff; text-shadow:0 0 12px var(--kio-cyan),0 0 30px var(--kio-cyan); display:block; margin-bottom:6px; }
-  .wiz-logo h1 { font-size:18px; font-weight:600; color:var(--kio-cyan); }
-  .wiz-logo p { font-size:12px; color:var(--muted); margin-top:4px; }
-  .step {
-    background:var(--surface); border:1px solid var(--border); border-radius:14px;
-    padding:20px; margin-bottom:16px; position:relative;
-  }
-  .step-num {
-    position:absolute; top:-11px; left:18px;
-    background:var(--kio-cyan); color:#000; font-weight:700; font-size:10px;
-    border-radius:10px; padding:2px 10px; letter-spacing:.05em; text-transform:uppercase;
-  }
-  .step h3 { font-size:14px; font-weight:600; margin-bottom:10px; margin-top:4px; }
-  .step p, .step li { font-size:12px; color:var(--muted); line-height:1.7; }
-  .step ol { padding-left:18px; margin-top:8px; }
-  .step li { margin-bottom:4px; }
-  .cpill {
-    display:inline-block; background:var(--surface2); border:1px solid var(--border);
-    border-radius:4px; padding:1px 6px; font-size:10px; font-family:monospace;
-    color:var(--accent2); margin:1px;
-  }
-  .cblock {
-    background:var(--surface2); border:1px solid var(--border); border-radius:7px;
-    padding:8px 10px; font-family:monospace; font-size:11px;
-    color:var(--accent2); margin-top:8px; word-break:break-all; user-select:all;
-  }
-
-  /* ══ LOGIN ══ */
+  /* ══ LOGIN SCREEN ══ */
   #loginScreen {
-    display:none; max-width:380px; margin:60px auto; padding:32px 20px;
-    text-align:center;
-    background:var(--surface); border:1px solid var(--border); border-radius:20px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    min-height:100vh; padding:32px 20px;
   }
-  .login-kio { font-size:36px; font-weight:800; letter-spacing:.1em; color:#fff; text-shadow:0 0 10px var(--kio-cyan),0 0 25px var(--kio-cyan); display:block; margin-bottom:4px; }
-  #loginScreen h2 { font-size:16px; font-weight:600; color:var(--kio-cyan); margin-bottom:4px; }
-  #loginScreen p { font-size:12px; color:var(--muted); margin-bottom:24px; line-height:1.5; }
+  .login-card {
+    background:var(--surface);
+    border:1px solid rgba(77,207,255,.2);
+    border-radius:24px;
+    padding:40px 32px;
+    width:100%; max-width:360px;
+    text-align:center;
+    box-shadow: 0 0 60px rgba(77,207,255,.06), 0 20px 60px rgba(0,0,0,.4);
+  }
+  .login-kio {
+    font-size:48px; font-weight:800; letter-spacing:.1em; color:#fff;
+    text-shadow:0 0 12px var(--kio-cyan),0 0 30px var(--kio-cyan),0 0 60px rgba(77,207,255,.3);
+    display:block; margin-bottom:8px;
+  }
+  .login-card h2 {
+    font-size:15px; font-weight:600; color:var(--kio-cyan); margin-bottom:6px; letter-spacing:.02em;
+  }
+  .login-card .sub {
+    font-size:12px; color:var(--muted); margin-bottom:28px; line-height:1.6;
+  }
+  .domain-badge {
+    display:inline-flex; align-items:center; gap:6px;
+    background:rgba(77,207,255,.08); border:1px solid rgba(77,207,255,.25);
+    border-radius:20px; padding:5px 14px; margin-bottom:24px;
+    font-size:11px; color:var(--kio-cyan); font-weight:600; letter-spacing:.04em;
+  }
+  .domain-badge::before { content:'🔒'; font-size:12px; }
+  .btn-google {
+    background:#fff; color:#1f1f1f; border:none; font-weight:600;
+    padding:13px 20px; border-radius:10px; width:100%; font-size:14px;
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    cursor:pointer; transition:all .2s;
+    box-shadow:0 2px 8px rgba(0,0,0,.3);
+  }
+  .btn-google:hover { box-shadow:0 4px 16px rgba(0,0,0,.4); transform:translateY(-1px); }
+  .btn-google:active { transform:translateY(0); }
+  .login-footer {
+    margin-top:20px; font-size:10px; color:rgba(122,138,170,.5); line-height:1.6;
+  }
+  .alert-login {
+    background:rgba(255,71,87,.1); border:1px solid rgba(255,71,87,.3);
+    border-radius:8px; padding:10px 14px;
+    font-size:12px; color:#ff6b7a;
+    margin-bottom:16px; display:none; text-align:left;
+    line-height:1.5;
+  }
+  .alert-login.on { display:block; }
 
   /* ══ MAIN ══ */
-  .main { padding:14px; max-width:700px; margin:0 auto; display:none; }
+  .main { padding:14px; max-width:720px; margin:0 auto; display:none; }
   .main.on { display:block; }
 
   /* ══ CARD ══ */
-  .card {
-    background:var(--surface); border:1px solid var(--border);
-    border-radius:12px; overflow:hidden; margin-bottom:12px;
-  }
-  .ch {
-    padding:10px 14px; border-bottom:1px solid var(--border);
-    display:flex; align-items:center; justify-content:space-between;
-  }
-  .ch h2 {
-    font-size:10px; text-transform:uppercase; letter-spacing:.12em; color:var(--muted);
-    display:flex; align-items:center; gap:6px; font-weight:700;
-  }
+  .card { background:var(--surface); border:1px solid var(--border); border-radius:12px; overflow:hidden; margin-bottom:12px; }
+  .ch { padding:10px 14px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
+  .ch h2 { font-size:10px; text-transform:uppercase; letter-spacing:.12em; color:var(--muted); display:flex; align-items:center; gap:6px; font-weight:700; }
   .ch h2::before { content:''; display:inline-block; width:3px; height:11px; border-radius:2px; }
   .ch h2.a::before { background:var(--kio-cyan); }
   .ch h2.g::before { background:var(--accent2); }
@@ -142,17 +140,14 @@
   .cb { padding:14px; }
 
   /* ══ FORMS ══ */
-  label {
-    font-size:10px; color:var(--muted); margin-bottom:4px; display:block;
-    font-family:monospace; text-transform:uppercase; letter-spacing:.06em;
-  }
-  input, textarea, select {
+  label { font-size:10px; color:var(--muted); margin-bottom:4px; display:block; font-family:monospace; text-transform:uppercase; letter-spacing:.06em; }
+  input, textarea {
     width:100%; background:var(--surface2); border:1px solid var(--border);
     border-radius:7px; color:var(--text); font-family:'Inter',sans-serif;
     font-size:13px; padding:9px 11px; outline:none; transition:border-color .2s;
   }
-  input:focus, textarea:focus, select:focus { border-color:var(--kio-cyan); }
-  textarea { resize:vertical; min-height:65px; line-height:1.5; font-size:12px; }
+  input:focus, textarea:focus { border-color:var(--kio-cyan); }
+  textarea { resize:vertical; min-height:60px; line-height:1.5; font-size:12px; }
   .field { margin-bottom:10px; }
 
   /* ══ BUTTONS ══ */
@@ -171,43 +166,23 @@
   .btn-s:disabled { opacity:.4; cursor:not-allowed; }
   .btn-sec { background:var(--surface2); color:var(--text); border:1px solid var(--border); }
   .btn-sec:hover { border-color:var(--kio-cyan); }
-  .btn-warn { background:rgba(255,71,87,.12); color:var(--danger); border:1px solid rgba(255,71,87,.3); }
-  .btn-warn:hover { background:rgba(255,71,87,.2); }
-  .btn-google {
-    background:#fff; color:#1f1f1f; border:1px solid #ddd; font-weight:600;
-    padding:12px 20px; border-radius:8px; width:100%; font-size:14px;
-    display:flex; align-items:center; justify-content:center; gap:10px;
-    cursor:pointer; transition:all .2s; box-shadow:0 1px 4px rgba(0,0,0,.3);
-  }
-  .btn-google:hover { box-shadow:0 3px 10px rgba(0,0,0,.4); transform:translateY(-1px); }
+  .btn-warn { background:rgba(255,71,87,.1); color:var(--danger); border:1px solid rgba(255,71,87,.3); }
+  .btn-warn:hover { background:rgba(255,71,87,.18); }
 
   /* ══ ACTIVITIES ══ */
-  .act-block {
-    border-bottom:1px solid rgba(30,58,95,.5);
-    padding:10px 14px 0;
-  }
+  .act-block { border-bottom:1px solid rgba(30,58,95,.5); padding:10px 14px 0; }
   .act-block:last-child { border-bottom:none; }
   .act-top { display:grid; grid-template-columns:1fr auto; gap:8px; align-items:start; margin-bottom:6px; }
   .act-desc { font-size:13px; line-height:1.4; font-weight:500; }
   .act-notes { font-size:11px; color:var(--muted); margin-bottom:4px; font-style:italic; line-height:1.5; }
-  .badge {
-    font-size:9px; font-weight:700; padding:3px 7px; border-radius:20px;
-    text-transform:uppercase; letter-spacing:.05em; white-space:nowrap;
-  }
+  .badge { font-size:9px; font-weight:700; padding:3px 7px; border-radius:20px; text-transform:uppercase; letter-spacing:.05em; white-space:nowrap; }
   .b-ex { background:rgba(0,255,136,.12); color:var(--accent2); border:1px solid rgba(0,255,136,.3); }
   .b-ca { background:rgba(255,71,87,.12); color:var(--danger); border:1px solid rgba(255,71,87,.3); }
   .b-pr { background:rgba(255,184,0,.12); color:var(--warn); border:1px solid rgba(255,184,0,.3); }
   .b-ot { background:rgba(100,116,139,.12); color:var(--muted); border:1px solid rgba(100,116,139,.3); }
 
-  /* per-activity incident */
-  .inc-toggle-row {
-    display:flex; align-items:center; gap:8px;
-    padding:5px 0 8px; cursor:pointer;
-  }
-  .mini-tog {
-    width:32px; height:18px; background:var(--surface2); border:1px solid var(--border);
-    border-radius:9px; position:relative; transition:background .2s; flex-shrink:0;
-  }
+  .inc-toggle-row { display:flex; align-items:center; gap:8px; padding:5px 0 8px; cursor:pointer; }
+  .mini-tog { width:32px; height:18px; background:var(--surface2); border:1px solid var(--border); border-radius:9px; position:relative; transition:background .2s; flex-shrink:0; }
   .mini-tog.on { background:rgba(255,71,87,.3); border-color:var(--danger); }
   .mini-knob { width:13px; height:13px; background:var(--muted); border-radius:50%; position:absolute; top:2px; left:2px; transition:all .18s; }
   .mini-tog.on .mini-knob { background:var(--danger); left:16px; }
@@ -224,18 +199,13 @@
   .rm { background:none; border:none; color:var(--danger); cursor:pointer; font-size:14px; padding:0 4px; opacity:.6; transition:opacity .2s; }
   .rm:hover { opacity:1; }
   .add-row { display:grid; grid-template-columns:1fr 1fr auto; gap:8px; }
-  .phone-hist { position:relative; }
 
   /* ══ TABS ══ */
   .tabs { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px; }
-  .tab {
-    background:var(--surface2); border:1px solid var(--border); border-radius:20px;
-    padding:4px 12px; font-size:12px; cursor:pointer; color:var(--muted);
-    transition:all .2s; white-space:nowrap; font-weight:500;
-  }
+  .tab { background:var(--surface2); border:1px solid var(--border); border-radius:20px; padding:4px 12px; font-size:12px; cursor:pointer; color:var(--muted); transition:all .2s; white-space:nowrap; font-weight:500; }
   .tab.on { background:rgba(77,207,255,.1); border-color:var(--kio-cyan); color:var(--kio-cyan); }
 
-  /* ══ WHATSAPP PREVIEW ══ */
+  /* ══ WA PREVIEW ══ */
   .wa {
     background:#1a2f1a; border:1px solid rgba(0,255,136,.15);
     border-radius:12px 12px 12px 0; padding:14px 15px;
@@ -257,19 +227,13 @@
   @keyframes rot { to { transform:rotate(360deg); } }
   .counter { font-family:monospace; font-size:10px; color:var(--muted); background:var(--surface2); padding:2px 8px; border-radius:10px; }
   .empty { text-align:center; padding:22px; color:var(--muted); font-size:13px; }
-  .row-btns { display:flex; gap:8px; margin-top:10px; }
+  .row-btns { display:flex; gap:8px; margin-top:0; }
   .row-btns .btn { flex:1; }
-  .divider { height:1px; background:var(--border); margin:10px 0; }
-  a { color:var(--kio-cyan); }
-  .kio-accent { color:var(--kio-cyan); }
-
-  /* ══ PHONE DATALIST ══ */
-  datalist option { background:var(--surface2); color:var(--text); }
 </style>
 </head>
 <body>
 
-<!-- ══════════ KIO APP BAR ══════════ -->
+<!-- ══ KIO APP BAR (visible after login) ══ -->
 <div class="kio-bar" id="appBar" style="display:none">
   <div class="kio-bar-inner">
     <div class="kio-logo">KIO</div>
@@ -288,85 +252,42 @@
   </div>
 </div>
 
-<!-- ══════════ WIZARD ══════════ -->
-<div id="wizardScreen">
-  <div class="wiz-logo">
-    <span class="wiz-kio">KIO</span>
-    <h1>Reporte Operación a la Dirección</h1>
-    <p>Configuración de acceso a Google Sheets · Solo una vez</p>
-  </div>
-
-  <div class="step">
-    <div class="step-num">Paso 1 — Crear proyecto Cloud</div>
-    <h3>Habilitar Google Sheets API</h3>
-    <ol>
-      <li>Abre <a href="https://console.cloud.google.com" target="_blank">console.cloud.google.com</a></li>
-      <li>Selector de proyectos → <strong>Nuevo proyecto</strong> → nombre <span class="cpill">ReporteKIO</span> → Crear</li>
-      <li>Menú ☰ → <strong>APIs y servicios</strong> → <strong>Biblioteca</strong></li>
-      <li>Busca <span class="cpill">Google Sheets API</span> → Habilitar</li>
-    </ol>
-  </div>
-
-  <div class="step">
-    <div class="step-num">Paso 2 — Crear credencial OAuth</div>
-    <h3>Obtener tu Client ID</h3>
-    <ol>
-      <li>Menú ☰ → <strong>APIs y servicios</strong> → <strong>Credenciales</strong></li>
-      <li><strong>+ Crear credenciales</strong> → <strong>ID de cliente OAuth</strong></li>
-      <li>Pantalla de consentimiento: tipo <span class="cpill">Externo</span>, llena nombre y correo → Guardar</li>
-      <li>Tipo de aplicación: <span class="cpill">Aplicación web</span></li>
-      <li>En <em>"Orígenes de JavaScript autorizados"</em> agrega:<div class="cblock">https://decantes-art.github.io</div></li>
-      <li>Clic <strong>Crear</strong> — copia el <strong>ID de cliente</strong></li>
-    </ol>
-  </div>
-
-  <div class="step">
-    <div class="step-num">Paso 3 — Ingresa tus datos</div>
-    <h3>Configuración</h3>
-    <div class="field">
-      <label>Google OAuth Client ID</label>
-      <input type="text" id="wizClientId" placeholder="123456789-xxxx.apps.googleusercontent.com" style="font-family:monospace;font-size:11px">
-    </div>
-    <div class="field">
-      <label>ID del Google Sheet</label>
-      <input type="text" id="wizSheetId" value="1AuuY-3B40DxjGlGv2Jhdrpm6ISOUO-aJ5l09NNusgfk">
-    </div>
-    <div class="alert al-e" id="wizErr"></div>
-    <button class="btn btn-p btn-full" onclick="saveWizard()">💾 Guardar y continuar</button>
-    <p style="text-align:center;font-size:11px;color:var(--muted);margin-top:10px">
-      ¿Ya configuraste antes? <a href="#" onclick="tryLoadSaved()">Cargar config guardada</a>
-    </p>
-  </div>
-</div>
-
-<!-- ══════════ LOGIN ══════════ -->
+<!-- ══ LOGIN ══ -->
 <div id="loginScreen">
-  <span class="login-kio">KIO</span>
-  <h2>Reporte Operación a la Dirección</h2>
-  <p>Generador de mensaje de estatus de operacion<br>Inicia sesión con tu cuenta Google para continuar</p>
-  <button class="btn-google" onclick="startLogin()">
-    <svg width="18" height="18" viewBox="0 0 18 18">
-      <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z" fill="#4285F4"/>
-      <path d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z" fill="#34A853"/>
-      <path d="M3.964 10.707A5.41 5.41 0 013.682 9c0-.593.102-1.17.282-1.707V4.961H.957A8.996 8.996 0 000 9c0 1.452.348 2.827.957 4.039l3.007-2.332z" fill="#FBBC05"/>
-      <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 00.957 4.961L3.964 7.293C4.672 5.163 6.656 3.58 9 3.58z" fill="#EA4335"/>
-    </svg>
-    Iniciar sesión con Google
-  </button>
-  <p style="margin-top:14px;font-size:11px;color:var(--muted)">
-    <a href="#" onclick="showWizard()">⚙️ Cambiar configuración</a>
-  </p>
+  <div class="login-card">
+    <span class="login-kio">KIO</span>
+    <h2>Reporte Operación a la Dirección</h2>
+    <p class="sub">Generador de mensaje de estatus de operacion</p>
+
+    <div class="domain-badge">Acceso exclusivo · @kio.tech</div>
+
+    <div class="alert-login" id="loginErr"></div>
+
+    <button class="btn-google" id="loginBtn" onclick="startLogin()">
+      <svg width="18" height="18" viewBox="0 0 18 18">
+        <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z" fill="#4285F4"/>
+        <path d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z" fill="#34A853"/>
+        <path d="M3.964 10.707A5.41 5.41 0 013.682 9c0-.593.102-1.17.282-1.707V4.961H.957A8.996 8.996 0 000 9c0 1.452.348 2.827.957 4.039l3.007-2.332z" fill="#FBBC05"/>
+        <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 00.957 4.961L3.964 7.293C4.672 5.163 6.656 3.58 9 3.58z" fill="#EA4335"/>
+      </svg>
+      Iniciar sesión con Google
+    </button>
+
+    <div class="login-footer">
+      Solo usuarios con correo <strong>@kio.tech</strong> pueden acceder.<br>
+      KIO IT Services · Operaciones
+    </div>
+  </div>
 </div>
 
-<!-- ══════════ MAIN APP ══════════ -->
+<!-- ══ MAIN APP ══ -->
 <div class="main" id="appMain">
 
-  <!-- HEADER INFO -->
-  <div style="text-align:center;padding:10px 0 4px">
+  <div style="text-align:center;padding:8px 0 4px">
     <div style="font-size:11px;color:var(--muted)">Generador de mensaje de estatus de operacion</div>
   </div>
 
-  <!-- LOAD CARD -->
+  <!-- LOAD -->
   <div class="card">
     <div class="ch"><h2 class="a">Google Sheets — Hoja del día</h2></div>
     <div class="cb">
@@ -376,7 +297,7 @@
         <button class="btn btn-p" style="flex:2" id="loadBtn" onclick="loadSheet()">
           🔄 Cargar actividades del día
         </button>
-        <button class="btn btn-warn" style="flex:1" id="clearBtn" onclick="clearData()" style="display:none">
+        <button class="btn btn-warn" style="flex:1;display:none" id="clearBtn" onclick="clearData()">
           🗑 Limpiar
         </button>
       </div>
@@ -397,13 +318,12 @@
     <div class="ch"><h2 class="w">Destinatarios</h2></div>
     <div id="recList"></div>
     <div class="cb">
-      <!-- Phone history datalist -->
       <datalist id="phoneHistory"></datalist>
+      <datalist id="nameHistory"></datalist>
       <div class="add-row">
         <div>
           <label>Nombre</label>
           <input type="text" id="newName" placeholder="Ej: Director TI" list="nameHistory">
-          <datalist id="nameHistory"></datalist>
         </div>
         <div>
           <label>Teléfono (con país)</label>
@@ -423,131 +343,122 @@
       <div class="tabs" id="recTabs"></div>
       <div class="wa" id="msgPrev"></div>
       <div class="copy-ok" id="copyOk"></div>
-      <div class="row-btns">
+      <div class="row-btns" style="margin-top:10px">
         <button class="btn btn-sec" onclick="copyMsg()">📋 Copiar</button>
         <button class="btn btn-s" id="sendBtn" onclick="sendWA()">💬 Abrir WhatsApp</button>
       </div>
     </div>
   </div>
 
-</div><!-- /main -->
+</div>
 
 <script>
-// ── CONFIG ───────────────────────────────────────────────
-let CFG = {
-  clientId: localStorage.getItem('op_cid') || '',
-  sheetId:  localStorage.getItem('op_sid') || '1AuuY-3B40DxjGlGv2Jhdrpm6ISOUO-aJ5l09NNusgfk'
-};
+// ══════════════════════════════════════════════════
+// ⚙️  CONFIGURACIÓN — edita solo estos dos valores
+// ══════════════════════════════════════════════════
+const CLIENT_ID = 'TU_CLIENT_ID_AQUI.apps.googleusercontent.com';
+const SHEET_ID  = '1AuuY-3B40DxjGlGv2Jhdrpm6ISOUO-aJ5l09NNusgfk';
+const ALLOWED_DOMAIN = 'kio.tech';
+// ══════════════════════════════════════════════════
 
-// ── STATE ────────────────────────────────────────────────
 const S = {
   token: null, user: null,
-  activities: [],       // {desc, status, notes, incActive, incText}
-  recipients: JSON.parse(localStorage.getItem('op_recs') || '[]'),
-  phoneBook: JSON.parse(localStorage.getItem('op_phones') || '[]'), // historic phones
+  activities: [],
+  recipients: JSON.parse(localStorage.getItem('op_recs')   || '[]'),
+  phoneBook:  JSON.parse(localStorage.getItem('op_phones') || '[]'),
   selRec: 0
 };
 
-// ── BOOT ─────────────────────────────────────────────────
+// ── BOOT ─────────────────────────────────────────
 window.onload = () => {
   updateDate();
-  buildPhoneDatalist();
+  buildDatalist();
   const tok = localStorage.getItem('op_tok');
   const exp = localStorage.getItem('op_exp');
-  if (CFG.clientId && tok && exp && Date.now() < +exp) {
-    S.token = tok; restoreUser(); showApp();
-  } else if (CFG.clientId) {
-    showLogin();
+  if (tok && exp && Date.now() < +exp) {
+    S.token = tok;
+    restoreUser();
+    showApp();
   } else {
-    showWizard();
+    showLogin();
   }
 };
 
 function updateDate() {
-  const d = new Date();
   document.getElementById('dateBadge').textContent =
-    d.toLocaleDateString('es-MX',{weekday:'short',day:'2-digit',month:'2-digit',year:'numeric'});
+    new Date().toLocaleDateString('es-MX',{weekday:'short',day:'2-digit',month:'2-digit',year:'numeric'});
 }
 
-// ── SCREENS ──────────────────────────────────────────────
-function showWizard() {
-  document.getElementById('wizardScreen').style.display = 'block';
-  document.getElementById('loginScreen').style.display  = 'none';
-  document.getElementById('appBar').style.display       = 'none';
-  document.getElementById('appMain').classList.remove('on');
-  document.getElementById('wizClientId').value = CFG.clientId;
-  document.getElementById('wizSheetId').value  = CFG.sheetId;
-}
-
+// ── SCREENS ──────────────────────────────────────
 function showLogin() {
-  document.getElementById('wizardScreen').style.display = 'none';
-  document.getElementById('loginScreen').style.display  = 'block';
-  document.getElementById('appBar').style.display       = 'none';
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('appBar').style.display      = 'none';
   document.getElementById('appMain').classList.remove('on');
   initToken();
 }
 
 function showApp() {
-  document.getElementById('wizardScreen').style.display = 'none';
-  document.getElementById('loginScreen').style.display  = 'none';
-  document.getElementById('appBar').style.display       = 'block';
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('appBar').style.display      = 'block';
   document.getElementById('appMain').classList.add('on');
   renderRecs();
   updatePreviewCard();
 }
 
-// ── WIZARD ───────────────────────────────────────────────
-function saveWizard() {
-  const cid = document.getElementById('wizClientId').value.trim();
-  const sid = document.getElementById('wizSheetId').value.trim();
-  if (!cid || !cid.includes('.apps.googleusercontent.com')) {
-    showAlert('wizErr','El Client ID debe terminar en .apps.googleusercontent.com'); return;
-  }
-  if (!sid) { showAlert('wizErr','Ingresa el ID del Sheet'); return; }
-  CFG.clientId = cid; CFG.sheetId = sid;
-  localStorage.setItem('op_cid', cid);
-  localStorage.setItem('op_sid', sid);
-  showLogin();
-}
-function tryLoadSaved() {
-  CFG.clientId = localStorage.getItem('op_cid') || '';
-  CFG.sheetId  = localStorage.getItem('op_sid') || CFG.sheetId;
-  if (CFG.clientId) showLogin();
-  else showAlert('wizErr','No hay configuración guardada');
-}
-
-// ── GOOGLE OAUTH ─────────────────────────────────────────
+// ── GOOGLE OAUTH ─────────────────────────────────
 let tokenClient;
 function initToken() {
   if (!window.google?.accounts?.oauth2) { setTimeout(initToken, 400); return; }
   tokenClient = google.accounts.oauth2.initTokenClient({
-    client_id: CFG.clientId,
-    scope: 'https://www.googleapis.com/auth/spreadsheets.readonly https://www.googleapis.com/auth/userinfo.profile',
+    client_id: CLIENT_ID,
+    scope: 'https://www.googleapis.com/auth/spreadsheets.readonly https://www.googleapis.com/auth/userinfo.profile email',
     callback: onToken
   });
 }
+
 function startLogin() {
+  document.getElementById('loginErr').classList.remove('on');
   if (!tokenClient) { initToken(); setTimeout(startLogin, 500); return; }
-  tokenClient.requestAccessToken({ prompt:'consent' });
+  tokenClient.requestAccessToken({ prompt: 'select_account' });
 }
+
 async function onToken(resp) {
-  if (resp.error) { alert('Error de autenticación: ' + resp.error); return; }
+  if (resp.error) { showLoginErr('Error de autenticación: ' + resp.error); return; }
   S.token = resp.access_token;
-  const exp = Date.now() + (resp.expires_in || 3600) * 1000;
-  localStorage.setItem('op_tok', S.token);
-  localStorage.setItem('op_exp', exp);
-  await fetchUser();
-  showApp();
-}
-async function fetchUser() {
+
+  // ── VALIDATE DOMAIN ──────────────────────────
   try {
-    const r = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', { headers:{ Authorization:'Bearer '+S.token } });
+    const r = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+      headers: { Authorization: 'Bearer ' + S.token }
+    });
     const u = await r.json();
-    S.user = { name: u.given_name || u.name, pic: u.picture, email: u.email };
+    const email = u.email || '';
+
+    if (!email.endsWith('@' + ALLOWED_DOMAIN)) {
+      // Revoke token immediately and block access
+      S.token = null;
+      fetch(`https://oauth2.googleapis.com/revoke?token=${resp.access_token}`, { method:'POST' });
+      showLoginErr(
+        `⛔ Acceso denegado.\n"${email}" no pertenece al dominio @${ALLOWED_DOMAIN}.\n\nEste sistema es exclusivo para usuarios KIO IT Services.`
+      );
+      return;
+    }
+
+    // ── DOMAIN OK ────────────────────────────────
+    const exp = Date.now() + (resp.expires_in || 3600) * 1000;
+    localStorage.setItem('op_tok', S.token);
+    localStorage.setItem('op_exp', exp);
+    S.user = { name: u.given_name || u.name, pic: u.picture, email };
     localStorage.setItem('op_user', JSON.stringify(S.user));
     updateUserUI();
-  } catch(e) {}
+    showApp();
+
+  } catch(e) {
+    showLoginErr('Error al verificar la cuenta. Intenta de nuevo.');
+    S.token = null;
+  }
 }
+
 function restoreUser() {
   const d = localStorage.getItem('op_user');
   if (d) { S.user = JSON.parse(d); updateUserUI(); }
@@ -563,13 +474,14 @@ function logout() {
   if (window.google?.accounts?.id) google.accounts.id.disableAutoSelect();
   showLogin();
 }
+function showLoginErr(msg) {
+  const el = document.getElementById('loginErr');
+  el.textContent = msg; el.classList.add('on');
+}
 
-// ── LOAD SHEET ───────────────────────────────────────────
+// ── LOAD SHEET ────────────────────────────────────
 async function loadSheet() {
-  if (!S.token) {
-    if (tokenClient) { tokenClient.requestAccessToken({ prompt:'' }); return; }
-    showLogin(); return;
-  }
+  if (!S.token) { showLogin(); return; }
   const btn = document.getElementById('loadBtn');
   btn.disabled = true;
   btn.innerHTML = '<span class="spin"></span> Leyendo Sheet…';
@@ -583,14 +495,10 @@ async function loadSheet() {
       d.getFullYear()
     ].join('-');
 
-    const range = encodeURIComponent(`${tab}!A:M`);
-    const url = `https://sheets.googleapis.com/v4/spreadsheets/${CFG.sheetId}/values/${range}`;
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${encodeURIComponent(tab+'!A:M')}`;
     const res = await fetch(url, { headers:{ Authorization:'Bearer '+S.token } });
 
-    if (res.status === 401) {
-      localStorage.removeItem('op_tok'); S.token = null;
-      tokenClient?.requestAccessToken({ prompt:'' }); return;
-    }
+    if (res.status === 401) { localStorage.removeItem('op_tok'); S.token=null; tokenClient?.requestAccessToken({prompt:''}); return; }
     if (!res.ok) {
       const err = await res.json();
       const msg = err?.error?.message || `HTTP ${res.status}`;
@@ -600,10 +508,10 @@ async function loadSheet() {
     }
 
     const data = await res.json();
-    parseRows(data.values || [], tab);
-    showAlert('loadOk', `✅ Pestaña "${tab}" · ${S.activities.length} actividades cargadas`);
-    document.getElementById('actCard').style.display = 'block';
-    document.getElementById('recCard').style.display = 'block';
+    parseRows(data.values || []);
+    showAlert('loadOk', `✅ Pestaña "${tab}" · ${S.activities.length} actividades`);
+    document.getElementById('actCard').style.display  = 'block';
+    document.getElementById('recCard').style.display  = 'block';
     document.getElementById('clearBtn').style.display = 'inline-flex';
     updatePreviewCard();
 
@@ -615,24 +523,23 @@ async function loadSheet() {
   }
 }
 
-// ── CLEAR DATA ───────────────────────────────────────────
 function clearData() {
-  if (!confirm('¿Limpiar actividades cargadas? Los destinatarios se conservan.')) return;
+  if (!confirm('¿Limpiar actividades? Los destinatarios se conservan.')) return;
   S.activities = [];
-  document.getElementById('actCard').style.display = 'none';
+  document.getElementById('actCard').style.display  = 'none';
   document.getElementById('prevCard').style.display = 'none';
   document.getElementById('clearBtn').style.display = 'none';
   hideAlert('loadOk'); hideAlert('loadErr');
 }
 
-// ── PARSE ROWS ───────────────────────────────────────────
+// ── PARSE ─────────────────────────────────────────
 function parseRows(rows) {
   S.activities = [];
-  let hi = -1, cD=2, cS=8, cN=11;
+  let hi=-1, cD=2, cS=8, cN=11;
   for (let i=0; i<rows.length; i++) {
-    const flat = (rows[i]||[]).join('|').toLowerCase();
-    if (flat.includes('subject') || flat.includes('descripci')) {
-      hi = i;
+    const flat=(rows[i]||[]).join('|').toLowerCase();
+    if (flat.includes('subject')||flat.includes('descripci')) {
+      hi=i;
       (rows[i]||[]).forEach((c,j)=>{
         const cl=c.toLowerCase();
         if (cl.includes('subject')||cl.includes('descripci')) cD=j;
@@ -649,41 +556,36 @@ function parseRows(rows) {
     if (!desc) continue;
     if (desc.toLowerCase().includes('actividades apoyo')) continue;
     if (desc.toLowerCase().includes('subject')||desc.toLowerCase().includes('descripci')) continue;
-    S.activities.push({ desc, status, notes, incActive:false, incText:'' });
+    S.activities.push({desc,status,notes,incActive:false,incText:''});
   }
   renderActs();
 }
 
-// ── RENDER ACTIVITIES ────────────────────────────────────
+// ── RENDER ACTIVITIES ─────────────────────────────
 function renderActs() {
   document.getElementById('actCnt').textContent = S.activities.length;
   const el = document.getElementById('actList');
-  if (!S.activities.length) {
-    el.innerHTML = '<div class="empty">Sin actividades en esta fecha</div>';
-    buildPreview(); return;
-  }
-  el.innerHTML = S.activities.map((a,i) => `
-    <div class="act-block" id="act-block-${i}">
+  if (!S.activities.length) { el.innerHTML='<div class="empty">Sin actividades en esta fecha</div>'; buildPreview(); return; }
+  el.innerHTML = S.activities.map((a,i)=>`
+    <div class="act-block" id="ab-${i}">
       <div class="act-top">
         <div>
           <div class="act-desc">${esc(shortTitle(a.desc))}</div>
-          ${a.notes ? `<div class="act-notes">${esc(a.notes.split('\n').slice(0,2).join(' · '))}</div>` : ''}
+          ${a.notes?`<div class="act-notes">${esc(a.notes.split('\n').slice(0,2).join(' · '))}</div>`:''}
         </div>
         <div class="badge ${bClass(a.status)}">${a.status||'—'}</div>
       </div>
       <div class="inc-toggle-row" onclick="toggleActInc(${i})">
-        <div class="mini-tog${a.incActive?' on':''}" id="mtog-${i}"><div class="mini-knob"></div></div>
-        <span class="inc-lbl${a.incActive?' on':''}" id="ilbl-${i}">
-          ${a.incActive ? '⚠️ Incidente en esta actividad' : 'Reportar incidente en esta actividad'}
+        <div class="mini-tog${a.incActive?' on':''}" id="mt-${i}"><div class="mini-knob"></div></div>
+        <span class="inc-lbl${a.incActive?' on':''}" id="il-${i}">
+          ${a.incActive?'⚠️ Incidente registrado':'Reportar incidente en esta actividad'}
         </span>
       </div>
-      <div class="act-inc-area${a.incActive?' on':''}" id="iarea-${i}">
+      <div class="act-inc-area${a.incActive?' on':''}" id="ia-${i}">
         <textarea
           placeholder="Describe el incidente de esta actividad…"
-          onchange="setActInc(${i}, this.value)"
-          oninput="setActInc(${i}, this.value)"
-          style="margin-bottom:8px"
-        >${a.incText}</textarea>
+          oninput="setActInc(${i},this.value)"
+        >${esc(a.incText)}</textarea>
       </div>
     </div>`).join('');
   buildPreview();
@@ -691,73 +593,58 @@ function renderActs() {
 
 function toggleActInc(i) {
   S.activities[i].incActive = !S.activities[i].incActive;
-  const tog = document.getElementById(`mtog-${i}`);
-  const lbl = document.getElementById(`ilbl-${i}`);
-  const area = document.getElementById(`iarea-${i}`);
-  tog.classList.toggle('on', S.activities[i].incActive);
-  area.classList.toggle('on', S.activities[i].incActive);
+  document.getElementById(`mt-${i}`).classList.toggle('on', S.activities[i].incActive);
+  document.getElementById(`ia-${i}`).classList.toggle('on', S.activities[i].incActive);
+  const lbl = document.getElementById(`il-${i}`);
   lbl.classList.toggle('on', S.activities[i].incActive);
-  lbl.textContent = S.activities[i].incActive ? '⚠️ Incidente en esta actividad' : 'Reportar incidente en esta actividad';
+  lbl.textContent = S.activities[i].incActive ? '⚠️ Incidente registrado' : 'Reportar incidente en esta actividad';
   buildPreview();
 }
+function setActInc(i, val) { S.activities[i].incText=val; buildPreview(); }
 
-function setActInc(i, val) {
-  S.activities[i].incText = val;
-  buildPreview();
+// ── PHONE BOOK ────────────────────────────────────
+function buildDatalist() {
+  const pdl=document.getElementById('phoneHistory');
+  const ndl=document.getElementById('nameHistory');
+  if (pdl) pdl.innerHTML=S.phoneBook.map(p=>`<option value="${p.phone}">${p.name} — ${p.phone}</option>`).join('');
+  if (ndl) ndl.innerHTML=S.phoneBook.map(p=>`<option value="${p.name}">`).join('');
 }
-
-// ── PHONE BOOK (historic) ────────────────────────────────
-function buildPhoneDatalist() {
-  const dl = document.getElementById('phoneHistory');
-  const ndl = document.getElementById('nameHistory');
-  if (dl) dl.innerHTML = S.phoneBook.map(p=>`<option value="${p.phone}">${p.name} — ${p.phone}</option>`).join('');
-  if (ndl) ndl.innerHTML = S.phoneBook.map(p=>`<option value="${p.name}">`).join('');
-}
-
 function saveToPhoneBook(name, phone) {
   if (!phone) return;
-  // avoid duplicates by phone
   if (!S.phoneBook.find(p=>p.phone===phone)) {
-    S.phoneBook.push({name, phone});
+    S.phoneBook.push({name,phone});
     localStorage.setItem('op_phones', JSON.stringify(S.phoneBook));
-    buildPhoneDatalist();
+    buildDatalist();
   }
 }
 
-// ── RECIPIENTS ───────────────────────────────────────────
+// ── RECIPIENTS ────────────────────────────────────
 function addRec() {
-  const n = document.getElementById('newName').value.trim();
-  const p = document.getElementById('newPhone').value.trim();
+  const n=document.getElementById('newName').value.trim();
+  const p=document.getElementById('newPhone').value.trim();
   if (!n) return;
-  // If phone came from datalist, try to auto-fill name from history
-  S.recipients.push({name:n, phone:p});
-  saveToPhoneBook(n, p);
+  S.recipients.push({name:n,phone:p});
+  saveToPhoneBook(n,p);
   saveRecs(); renderRecs(); updatePreviewCard();
-  document.getElementById('newName').value = '';
-  document.getElementById('newPhone').value = '';
+  document.getElementById('newName').value='';
+  document.getElementById('newPhone').value='';
 }
-
-// Auto-fill phone when name is picked from datalist
-document.addEventListener('DOMContentLoaded', ()=>{
-  document.getElementById('newName')?.addEventListener('change', e=>{
-    const found = S.phoneBook.find(p=>p.name===e.target.value);
-    if (found) document.getElementById('newPhone').value = found.phone;
-  });
+document.addEventListener('change', e=>{
+  if (e.target.id==='newName') {
+    const found=S.phoneBook.find(p=>p.name===e.target.value);
+    if (found) document.getElementById('newPhone').value=found.phone;
+  }
 });
-
 function removeRec(i) {
   S.recipients.splice(i,1);
-  if (S.selRec >= S.recipients.length) S.selRec = Math.max(0, S.recipients.length-1);
+  if (S.selRec>=S.recipients.length) S.selRec=Math.max(0,S.recipients.length-1);
   saveRecs(); renderRecs(); updatePreviewCard();
 }
-function saveRecs() { localStorage.setItem('op_recs', JSON.stringify(S.recipients)); }
+function saveRecs() { localStorage.setItem('op_recs',JSON.stringify(S.recipients)); }
 function renderRecs() {
-  const el = document.getElementById('recList');
-  if (!S.recipients.length) {
-    el.innerHTML = '<div style="padding:8px 14px;font-size:12px;color:var(--muted)">Sin destinatarios guardados.</div>';
-    return;
-  }
-  el.innerHTML = S.recipients.map((r,i)=>`
+  const el=document.getElementById('recList');
+  if (!S.recipients.length) { el.innerHTML='<div style="padding:8px 14px;font-size:12px;color:var(--muted)">Sin destinatarios.</div>'; return; }
+  el.innerHTML=S.recipients.map((r,i)=>`
     <div class="rec-item">
       <div class="rn">👤 ${esc(r.name)}</div>
       <div class="rp">${r.phone||'sin número'}</div>
@@ -765,111 +652,81 @@ function renderRecs() {
     </div>`).join('');
 }
 function updatePreviewCard() {
-  const hasActs = document.getElementById('actCard').style.display === 'block';
-  const pc = document.getElementById('prevCard');
-  if (!hasActs || !S.recipients.length) { pc.style.display='none'; return; }
-  pc.style.display = 'block';
-  const tabs = document.getElementById('recTabs');
-  tabs.innerHTML = S.recipients.map((r,i)=>
+  const hasActs=document.getElementById('actCard').style.display==='block';
+  const pc=document.getElementById('prevCard');
+  if (!hasActs||!S.recipients.length) { pc.style.display='none'; return; }
+  pc.style.display='block';
+  document.getElementById('recTabs').innerHTML=S.recipients.map((r,i)=>
     `<span class="tab ${i===S.selRec?'on':''}" onclick="selRec(${i})">${esc(r.name)}</span>`
   ).join('');
   buildPreview();
 }
 function selRec(i) { S.selRec=i; updatePreviewCard(); }
 
-// ── MESSAGE BUILDER ──────────────────────────────────────
+// ── MESSAGE BUILDER ───────────────────────────────
 function shortTitle(desc) {
-  const first = desc.split('\n').map(l=>l.trim()).find(l=>l.length>0) || desc;
-  return first.length > 85 ? first.substring(0,85)+'…' : first;
+  const first=desc.split('\n').map(l=>l.trim()).find(l=>l.length>0)||desc;
+  return first.length>85?first.substring(0,85)+'…':first;
 }
-
 function cleanNotes(notes) {
-  return notes.split('\n')
-    .map(l=>l.trim()).filter(l=>l.length>0)
-    .join('\n      ');
+  return notes.split('\n').map(l=>l.trim()).filter(l=>l.length>0).join('\n      ');
 }
-
 function buildMsg(name) {
-  const h = new Date().getHours();
-  const gr = h>=18 ? 'Buenas noches' : h>=12 ? 'Buenas tardes' : 'Buenos dias';
-
-  // Check if any activity has an incident
-  const anyInc = S.activities.some(a=>a.incActive);
-
-  const acts = S.activities.map((a,i) => {
-    const icon = sIcon(a.status);
-    const titulo = shortTitle(a.desc);
-    const statusLabel = a.status ? ` [${a.status.toUpperCase()}]` : '';
-
-    let bloque = `${icon} *${titulo}*${statusLabel}`;
-
-    if (a.notes && a.notes.trim()) {
-      bloque += `\n      📋 ${cleanNotes(a.notes)}`;
-    }
-
-    if (a.incActive && a.incText.trim()) {
-      bloque += `\n      ⚠️ _Incidente:_ ${a.incText.trim()}`;
-    } else if (a.incActive) {
-      bloque += `\n      ⚠️ _Incidente registrado en esta actividad._`;
-    }
-
+  const h=new Date().getHours();
+  const gr=h>=18?'Buenas noches':h>=12?'Buenas tardes':'Buenos dias';
+  const anyInc=S.activities.some(a=>a.incActive);
+  const acts=S.activities.map(a=>{
+    const icon=sIcon(a.status);
+    const titulo=shortTitle(a.desc);
+    const statusLabel=a.status?` [${a.status.toUpperCase()}]`:'';
+    let bloque=`${icon} *${titulo}*${statusLabel}`;
+    if (a.notes&&a.notes.trim()) bloque+=`\n      📋 ${cleanNotes(a.notes)}`;
+    if (a.incActive&&a.incText.trim()) bloque+=`\n      ⚠️ _Incidente:_ ${a.incText.trim()}`;
+    else if (a.incActive) bloque+=`\n      ⚠️ _Incidente registrado en esta actividad._`;
     return bloque;
   }).join('\n\n');
 
   return `${gr} *${name||'Equipo'}*,
 
 Comparto estado de la operacion:
-✅ Operacion Batch, estable${anyInc ? ', con incidencia.' : ', sin incidencia.'}
+✅ Operacion Batch, estable${anyInc?', con incidencia.':', sin incidencia.'}
 ✅ Operacion, servicios e infraestructura se mantienen estables.
 
 *Actividades programadas:*
 ━━━━━━━━━━━━━━━━━━
-${acts || 'Sin actividades registradas para hoy.'}
+${acts||'Sin actividades registradas para hoy.'}
 ━━━━━━━━━━━━━━━━━━
 
 Saludos y excelente noche.`;
 }
-
 function buildPreview() {
-  const r = S.recipients[S.selRec];
-  document.getElementById('msgPrev').textContent = buildMsg(r ? r.name : 'Equipo');
-  const btn = document.getElementById('sendBtn');
-  if (btn) btn.disabled = !r || !r.phone;
+  const r=S.recipients[S.selRec];
+  document.getElementById('msgPrev').textContent=buildMsg(r?r.name:'Equipo');
+  const btn=document.getElementById('sendBtn');
+  if (btn) btn.disabled=!r||!r.phone;
 }
 
-// ── ACTIONS ──────────────────────────────────────────────
+// ── ACTIONS ───────────────────────────────────────
 function copyMsg() {
-  const r = S.recipients[S.selRec];
-  navigator.clipboard.writeText(buildMsg(r ? r.name : 'Equipo')).then(()=>{
-    const fb = document.getElementById('copyOk');
-    fb.textContent = '✅ Copiado al portapapeles';
-    setTimeout(()=>fb.textContent='', 2500);
+  const r=S.recipients[S.selRec];
+  navigator.clipboard.writeText(buildMsg(r?r.name:'Equipo')).then(()=>{
+    const fb=document.getElementById('copyOk');
+    fb.textContent='✅ Copiado al portapapeles';
+    setTimeout(()=>fb.textContent='',2500);
   });
 }
 function sendWA() {
-  const r = S.recipients[S.selRec];
-  if (!r||!r.phone) { alert('Este destinatario no tiene número'); return; }
-  window.open(`https://wa.me/${r.phone.replace(/\D/g,'')}?text=${encodeURIComponent(buildMsg(r.name))}`, '_blank');
+  const r=S.recipients[S.selRec];
+  if (!r||!r.phone) { alert('Agrega número al destinatario'); return; }
+  window.open(`https://wa.me/${r.phone.replace(/\D/g,'')}?text=${encodeURIComponent(buildMsg(r.name))}`,'_blank');
 }
 
-// ── HELPERS ──────────────────────────────────────────────
-function bClass(s) {
-  const sl=(s||'').toLowerCase();
-  if(sl.includes('exit')) return 'b-ex';
-  if(sl.includes('cancel')) return 'b-ca';
-  if(sl.includes('program')) return 'b-pr';
-  return 'b-ot';
-}
-function sIcon(s) {
-  const sl=(s||'').toLowerCase();
-  if(sl.includes('exit')) return '✅';
-  if(sl.includes('cancel')) return '❌';
-  if(sl.includes('program')) return '⏳';
-  return '🔹';
-}
-function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-function showAlert(id,msg){ const e=document.getElementById(id); e.textContent=msg; e.classList.add('on'); }
-function hideAlert(id){ document.getElementById(id).classList.remove('on'); }
+// ── HELPERS ───────────────────────────────────────
+function bClass(s){const sl=(s||'').toLowerCase();if(sl.includes('exit'))return 'b-ex';if(sl.includes('cancel'))return 'b-ca';if(sl.includes('program'))return 'b-pr';return 'b-ot';}
+function sIcon(s){const sl=(s||'').toLowerCase();if(sl.includes('exit'))return '✅';if(sl.includes('cancel'))return '❌';if(sl.includes('program'))return '⏳';return '🔹';}
+function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function showAlert(id,msg){const e=document.getElementById(id);e.textContent=msg;e.classList.add('on');}
+function hideAlert(id){document.getElementById(id).classList.remove('on');}
 </script>
 </body>
 </html>
